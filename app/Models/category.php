@@ -10,4 +10,9 @@ class category extends Model
         'name',
         'description',
     ];
+
+    public function links()
+    {
+    return $this->hasMany(Link::class);
+    }
 }
