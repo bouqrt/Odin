@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\LinkController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -21,5 +22,7 @@ Route::middleware(['auth', 'check.account.status', 'verified'])->group(function 
 Route::middleware(['auth'])->group(function () {
     Route::resource('categories', CategoryController::class);
 });
+
+Route::resource('links', LinkController::class);
 
 require __DIR__.'/auth.php';
