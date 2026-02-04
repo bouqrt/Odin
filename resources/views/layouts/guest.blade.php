@@ -23,8 +23,24 @@
             </div>
 
             <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
-                {{ $slot }}
-            </div>
+
+    {{-- Error message from middleware --}}
+    @if (session('error'))
+        <div class="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+            {{ session('error') }}
+        </div>
+    @endif
+
+    {{-- Validation / auth errors --}}
+    @if ($errors->any())
+        <div class="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+            {{ $errors->first() }}
+        </div>
+    @endif
+
+    {{ $slot }}
+</div>
+
         </div>
     </body>
 </html>
