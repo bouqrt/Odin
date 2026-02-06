@@ -1,42 +1,46 @@
-@extends('layouts.app')
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800">
+            Add Link
+        </h2>
+    </x-slot>
 
-@section('content')
-<div class="container">
-    <h1 class="text-xl font-bold mb-4">Add Link</h1>
+    <div class="p-6 max-w-xl">
+        <form action="{{ route('links.store') }}" method="POST">
+            @csrf
 
-    @if ($errors->any())
-        <div class="bg-red-200 text-red-800 p-2 rounded mb-4">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+            <div class="mb-4">
+                <label class="block font-medium mb-1">Title</label>
+                <input type="text" name="title"
+                       class="w-full border rounded px-3 py-2"
+                       required>
+            </div>
 
-    <form action="{{ route('links.store') }}" method="POST">
-        @csrf
-        <div class="mb-2">
-            <label>Title</label>
-            <input type="text" name="title" class="border px-2 py-1 w-full" value="{{ old('title') }}">
-        </div>
-        <div class="mb-2">
-            <label>URL</label>
-            <input type="url" name="url" class="border px-2 py-1 w-full" value="{{ old('url') }}">
-        </div>
-        <div class="mb-2">
-            <label>Category</label>
-            <select name="category_id" class="border px-2 py-1 w-full">
-                @foreach($categories as $category)
-                    <option value="{{ $category->id }}" @if(old('category_id') == $category->id) selected @endif>{{ $category->name }}</option>
-                @endforeach
-            </select>
-        </div>
-        <div class="mb-2">
-            <label>Description</label>
-            <textarea name="description" class="border px-2 py-1 w-full">{{ old('description') }}</textarea>
-        </div>
-        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Save</button>
-    </form>
-</div>
-@endsection
+            <div class="mb-4">
+                <label class="block font-medium mb-1">URL</label>
+                <input type="url" name="url"
+                       class="w-full border rounded px-3 py-2"
+                       required>
+            </div>
+
+            <div class="mb-4">
+                <label class="block font-medium mb-1">Category</label>
+                <select name="category_id"
+                        class="w-full border rounded px-3 py-2"
+                        required>
+                    <option value="">-- Select Category --</option>
+
+                    @foreach($categories as $category)
+                        <option value="{{ $category->id }}">
+                            {{ $category->name }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
+            <button class="bg-blue-500 text-white px-4 py-2 rounded">
+                Save
+            </button>
+        </form>
+    </div>
+</x-app-layout>

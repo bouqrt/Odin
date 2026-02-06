@@ -5,8 +5,8 @@
 
     <div class="p-6">
         <a href="{{ route('categories.create') }}"
-           class="bg-blue-500 text-white px-4 py-2 rounded">
-            + New Category
+            class="inline-block mb-4 bg-indigo-600 hover:bg-indigo-700 text-black font-semibold px-4 py-2 rounded shadow">
+                + New Category
         </a>
 
         @if(session('success'))
