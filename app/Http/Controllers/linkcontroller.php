@@ -31,14 +31,21 @@ class linkcontroller extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'url' => 'required|url',
-            'category_id' => 'required|exists:categories,id',
-        ]);
+    $request->validate([
+        'title' => 'required|string|max:255',
+        'url' => 'required|url',
+        'category_id' => 'required|exists:categories,id',
+    ]);
 
-        Link::create($request->all());
-        return redirect()->route('links.index')->with('success', 'Link created successfully.');
+    Link::create([
+        'title' => $request->title,
+        'url' => $request->url,
+        'category_id' => $request->category_id,
+        'user_id' => auth()->id(), // 👈 مهم بزاف
+    ]);
+
+    return redirect()->route('links.index')
+        ->with('success', 'Link created successfully.');
     }
 
     /**

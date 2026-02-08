@@ -9,7 +9,13 @@ class Link extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'url', 'description', 'category_id'];
+    protected $fillable = [
+        'title', 
+        'url', 
+        'description', 
+        'category_id',
+        'user_id'
+    ];
 
     public function category()
     {
