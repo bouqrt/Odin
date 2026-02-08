@@ -28,19 +28,19 @@ class CategoryController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-{
+    {
     $request->validate([
         'name' => 'required|string|max:255',
     ]);
 
     Category::create([
         'name' => $request->name,
+        'user_id' => auth()->id(), // 👈 الحل هنا
     ]);
 
     return redirect()->route('categories.index')
-                     ->with('success', 'Category created successfully');
-}
-
+        ->with('success', 'Category created successfully');
+    }
 
     /**
      * Display the specified resource.
