@@ -21,7 +21,13 @@ Route::middleware(['auth', 'check.account.status', 'verified'])->group(function 
 });
 
 Route::middleware(['auth'])->group(function () {
+
+    Route::get('/dashboard', [DashboardController::class, 'index'])
+        ->name('dashboard');
+
     Route::resource('categories', CategoryController::class);
+    Route::resource('links', LinkController::class);
+
 });
 
 Route::resource('links', LinkController::class);
