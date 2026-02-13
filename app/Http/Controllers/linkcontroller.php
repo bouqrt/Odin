@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Link;
 use App\Models\Category;
+use App\Models\Tag;
 
 class linkcontroller extends Controller
 {
@@ -21,10 +22,13 @@ class linkcontroller extends Controller
      * Show the form for creating a new resource.
      */
     public function create()
-    {
-        $categories = Category::all();
-        return view('links.create', compact('categories'));
-    }
+{
+    return view('links.create', [
+        'categories' => Category::where('user_id', auth()->id())->get(),
+        'tags' => Tag::where('user_id', auth()->id())->get(),
+    ]);
+}
+
 
     /**
      * Store a newly created resource in storage.
@@ -35,18 +39,25 @@ class linkcontroller extends Controller
         'title' => 'required|string|max:255',
         'url' => 'required|url',
         'category_id' => 'required|exists:categories,id',
+        'tags' => 'nullable|array',
+        'tags.*' => 'exists:tags,id',
     ]);
 
-    Link::create([
+    $link = Link::create([
         'title' => $request->title,
         'url' => $request->url,
         'category_id' => $request->category_id,
-        'user_id' => auth()->id(), // 👈 مهم بزاف
+        'user_id' => auth()->id(),
     ]);
+
+    if ($request->has('tags')) {
+        $link->tags()->attach($request->tags);
+    }
 
     return redirect()->route('links.index')
         ->with('success', 'Link created successfully.');
     }
+
 
     /**
      * Display the specified resource.

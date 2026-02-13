@@ -38,9 +38,19 @@
                 </select>
             </div>
 
+            <div class="mt-4">
+                <label class="block">Tags</label>
+                <select name="tags[]" multiple class="w-full border p-2">
+                    @foreach($tags as $tag)
+                        <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+
             <button class="bg-blue-500 text-white px-4 py-2 rounded">
                 Save
             </button>
+            
         </form>
     </div>
 </x-app-layout>

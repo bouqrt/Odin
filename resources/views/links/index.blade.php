@@ -23,6 +23,7 @@
                     <th class="border px-2 py-1">Title</th>
                     <th class="border px-2 py-1">URL</th>
                     <th class="border px-2 py-1">Category</th>
+                    <th class="border px-2 py-1">Tags</th>
                     <th class="border px-2 py-1">Actions</th>
                 </tr>
             </thead>
@@ -39,6 +40,16 @@
 
                         <td class="border px-2 py-1">
                             {{ $link->category->name ?? 'No category' }}
+                        </td>
+
+                        <td class="border px-2 py-1">
+                            @forelse($link->tags as $tag)
+                                <span class="bg-gray-200 text-sm px-2 py-1 rounded mr-1">
+                                    {{ $tag->name }}
+                                </span>
+                            @empty
+                                <span class="text-gray-400 text-sm">No tags</span>
+                            @endforelse
                         </td>
 
                         <td class="border px-2 py-1">
@@ -60,7 +71,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="4" class="text-center p-4 text-gray-500">
+                        <td colspan="5" class="text-center p-4 text-gray-500">
                             No links found.
                         </td>
                     </tr>
